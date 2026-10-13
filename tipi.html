@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipi primitivi in Java</title>
+  <meta name="description" content="Esercizi interattivi sui tipi di dati primitivi in Java: dimensioni, intervalli, letterali, overflow, cast.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231f4e8c'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+  <script>try{var d=document.documentElement,t=localStorage.getItem('jx-theme'),s=localStorage.getItem('jx-scale');if(t)d.dataset.theme=t;if(s)d.style.setProperty('--scale',s)}catch(e){}</script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/exercises.css">
+</head>
+<body>
+  <header class="topbar" data-page="tipi"></header>
+
+  <main class="page page-narrow">
+    <section class="hero">
+      <span class="eyebrow">Parte 2</span>
+      <h1>Tipi di dati primitivi</h1>
+      <p class="lead">Java dispone di otto tipi primitivi. Ciascuno occupa una quantità fissa di memoria e può rappresentare solo un determinato insieme di valori.</p>
+    </section>
+
+    <details class="theory" open>
+      <summary>Richiami di teoria</summary>
+      <div class="theory-body">
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Tipo</th><th>Categoria</th><th>Bit</th><th>Valori</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td><code>byte</code></td><td>intero</td><td>8</td><td>−128 … 127</td><td><code>byte b = 100;</code></td></tr>
+              <tr><td><code>short</code></td><td>intero</td><td>16</td><td>−32 768 … 32 767</td><td><code>short s = 30000;</code></td></tr>
+              <tr><td><code>int</code></td><td>intero</td><td>32</td><td>circa ± 2,1 miliardi</td><td><code>int i = 42;</code></td></tr>
+              <tr><td><code>long</code></td><td>intero</td><td>64</td><td>circa ± 9,2 × 10<sup>18</sup></td><td><code>long l = 8000000000L;</code></td></tr>
+              <tr><td><code>float</code></td><td>decimale</td><td>32</td><td>circa 7 cifre significative</td><td><code>float f = 1.75f;</code></td></tr>
+              <tr><td><code>double</code></td><td>decimale</td><td>64</td><td>circa 15–16 cifre significative</td><td><code>double d = 3.14;</code></td></tr>
+              <tr><td><code>char</code></td><td>carattere</td><td>16</td><td>0 … 65 535 (Unicode)</td><td><code>char c = 'A';</code></td></tr>
+              <tr><td><code>boolean</code></td><td>logico</td><td>—</td><td><code>true</code> oppure <code>false</code></td><td><code>boolean ok = true;</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="theory-grid" style="margin-top:12px">
+          <div class="theory-tip"><strong>Letterali</strong>Gli interi scritti nel codice sono <code>int</code>, i decimali sono <code>double</code>. Suffissi: <code>L</code> per <code>long</code>, <code>f</code> per <code>float</code>.</div>
+          <div class="theory-tip"><strong>Conversione automatica</strong><code>byte</code> → <code>short</code> → <code>int</code> → <code>long</code> → <code>float</code> → <code>double</code>, e <code>char</code> → <code>int</code>.</div>
+          <div class="theory-tip"><strong>Cast esplicito</strong>Verso un tipo più piccolo serve <code>(tipo)</code>: <code>(int) 3.9</code> vale 3. Tronca, non arrotonda.</div>
+          <div class="theory-tip"><strong>Divisione intera</strong>Tra due interi i decimali spariscono: <code>7 / 2</code> vale 3. Con <code>7 / 2.0</code> si ottiene 3.5.</div>
+          <div class="theory-tip"><strong>Overflow</strong>Superando il massimo il valore «fa il giro» e riparte dal minimo, senza errori.</div>
+          <div class="theory-tip"><strong>Promozione</strong>Nelle operazioni aritmetiche <code>byte</code>, <code>short</code> e <code>char</code> diventano <code>int</code>.</div>
+        </div>
+      </div>
+    </details>
+
+    <section class="card lab">
+      <h2>Rappresentazione binaria</h2>
+      <p style="color:var(--muted);margin:0">Strumento di supporto agli esercizi sull'overflow: mostra come un valore intero è rappresentato in memoria.</p>
+      <div id="lab"></div>
+    </section>
+
+    <div class="status-bar" id="status"></div>
+    <div class="ex-list" id="list"></div>
+  </main>
+
+
+  <script src="js/core.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/lab-bit.js"></script>
+  <script src="js/data-tipi.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      BitLab.mount(document.getElementById('lab'));
+      Engine.mount({
+        key: 'tipi',
+        list: document.getElementById('list'),
+        status: document.getElementById('status'),
+        exercises: window.EX_TIPI,
+        next: { href: 'finale.html', label: 'Parte 3: esercizio finale' }
+      });
+    });
+  </script>
+</body>
+</html>

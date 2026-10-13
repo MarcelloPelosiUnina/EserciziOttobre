@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Esercizi di Java</title>
+  <meta name="description" content="Esercizi di Java su costruttori e tipi di dati primitivi.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231f4e8c'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+  <script>try{var d=document.documentElement,t=localStorage.getItem('jx-theme'),s=localStorage.getItem('jx-scale');if(t)d.dataset.theme=t;if(s)d.style.setProperty('--scale',s)}catch(e){}</script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/exercises.css">
+</head>
+<body>
+  <header class="topbar" data-page="home"></header>
+
+  <main class="page page-narrow">
+    <section class="hero">
+      <h1>Costruttori e tipi primitivi</h1>
+      <p class="lead">Esercizi di Java sugli argomenti visti a lezione.</p>
+    </section>
+
+    <ol class="toc">
+      <li>
+        <a href="costruttori.html" data-key="costruttori">
+          <span class="n">1</span>
+          <h2>Costruttori</h2>
+          <p>Firma del costruttore, costruttore di default, <code>this</code>, overloading, <code>this(...)</code>.</p>
+          <span class="count"></span>
+        </a>
+      </li>
+      <li>
+        <a href="tipi.html" data-key="tipi">
+          <span class="n">2</span>
+          <h2>Tipi di dati primitivi</h2>
+          <p>Dimensioni e intervalli, letterali, divisione intera, overflow, conversioni e cast.</p>
+          <span class="count"></span>
+        </a>
+      </li>
+      <li>
+        <a href="finale.html">
+          <span class="n">3</span>
+          <h2>Esercizio finale</h2>
+          <p>Progettazione della classe <code>Personaggio</code>: scelta dei tipi e scrittura dei costruttori.</p>
+        </a>
+      </li>
+    </ol>
+  </main>
+
+  <script src="js/core.js"></script>
+  <script src="js/data-costruttori.js"></script>
+  <script src="js/data-tipi.js"></script>
+  <script>
+    (function () {
+      var sets = {
+        'costruttori': window.EX_COSTRUTTORI,
+        'tipi': window.EX_TIPI
+      };
+      document.querySelectorAll('.toc a[data-key]').forEach(function (link) {
+        var done = 0, total = 0;
+        link.dataset.key.split(',').forEach(function (key) {
+          var state = App.store.get('jx-ex-' + key, {});
+          (sets[key] || []).forEach(function (ex) {
+            if (ex.section) return;
+            total++;
+            var s = state[ex.id];
+            if (s && (s.status === 'correct' || s.status === 'revealed')) done++;
+          });
+        });
+        link.querySelector('.count').textContent = done ? done + ' di ' + total + ' svolti' : total + ' esercizi';
+      });
+    })();
+  </script>
+</body>
+</html>

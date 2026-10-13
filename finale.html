@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Esercizio finale</title>
+  <meta name="description" content="Esercizio finale: progettazione della classe Personaggio con tipi primitivi e costruttori.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231f4e8c'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+  <script>try{var d=document.documentElement,t=localStorage.getItem('jx-theme'),s=localStorage.getItem('jx-scale');if(t)d.dataset.theme=t;if(s)d.style.setProperty('--scale',s)}catch(e){}</script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/exercises.css">
+</head>
+<body>
+  <header class="topbar" data-page="finale"></header>
+
+  <main class="page page-narrow">
+    <section class="hero">
+      <span class="eyebrow">Parte 3</span>
+      <h1>Esercizio finale: la classe Personaggio</h1>
+    </section>
+
+    <section class="card">
+      <h2>Testo</h2>
+      <p>Si vuole rappresentare in Java il personaggio di un videogioco. Scrivere la classe <code>Personaggio</code> con i seguenti attributi privati:</p>
+      <ul class="spec">
+        <li><b>iniziale</b>: la lettera iniziale del nome;</li>
+        <li><b>livello</b>: numero intero compreso tra 1 e 100;</li>
+        <li><b>puntiVita</b>: numero intero, al massimo 5 000;</li>
+        <li><b>esperienza</b>: punti accumulati, che possono superare i 5 miliardi;</li>
+        <li><b>velocita</b>: numero con parte decimale (ad esempio 1.5);</li>
+        <li><b>haScudo</b>: indica se il personaggio possiede uno scudo.</li>
+      </ul>
+      <p style="margin-top:14px">La classe deve avere i seguenti costruttori:</p>
+      <ol class="spec" type="a">
+        <li><code>Personaggio()</code>: iniziale <code>'?'</code>, livello 1, puntiVita 100, esperienza 0, velocita 1.0, haScudo <code>false</code>;</li>
+        <li><code>Personaggio(char iniziale)</code>: come il precedente, ma con l'iniziale indicata;</li>
+        <li><code>Personaggio(char iniziale, int livello, boolean haScudo)</code>, con queste regole:
+          <ul>
+            <li>se il livello è minore di 1 diventa 1; se è maggiore di 100 diventa 100;</li>
+            <li>puntiVita = livello × 50;</li>
+            <li>esperienza = livello × 1000;</li>
+            <li>velocita = 1.0 + livello / 10, calcolata con la parte decimale (livello 15 → 2.5).</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Richieste</h2>
+      <ol class="spec">
+        <li>Per ciascun attributo indicare il tipo primitivo più adatto, motivando la scelta.</li>
+        <li>Scrivere la classe con gli attributi e i tre costruttori.</li>
+        <li>Indicare il valore di tutti gli attributi dopo ciascuna delle seguenti istruzioni:
+          <pre data-java>
+Personaggio p1 = new Personaggio();
+Personaggio p2 = new Personaggio('Z', 150, true);
+Personaggio p3 = new Personaggio('A', -5, false);</pre>
+        </li>
+        <li>Se nel costruttore c) la velocità fosse calcolata con <code>this.velocita = 1.0 + livello / 10;</code>, quale valore si otterrebbe per il livello 15? Perché?</li>
+        <li>Se i punti vita fossero calcolati con <code>this.puntiVita = (short) (livello * 500);</code>, quale valore si otterrebbe per il livello 70? Perché?</li>
+        <li>Quali delle seguenti istruzioni compilano? Motivare la risposta.
+          <pre data-java>
+new Personaggio('L', 5);
+new Personaggio('L', 5.5, true);
+new Personaggio('L', 'A', true);
+new Personaggio(true);</pre>
+        </li>
+        <li>Perché nel costruttore c) il parametro <code>livello</code> è di tipo <code>int</code> e non <code>byte</code>, come l'attributo?</li>
+        <li><i>(Facoltativo)</i> Aggiungere l'attributo <b>forza</b> di tipo <code>float</code> e un costruttore con quattro parametri che riutilizzi il costruttore c) tramite <code>this(...)</code>.</li>
+      </ol>
+    </section>
+
+    <section style="margin-top:28px">
+      <h2>Soluzioni</h2>
+
+      <details class="reveal-block">
+        <summary>Soluzione 1: scelta dei tipi</summary>
+        <div class="inner">
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>Attributo</th><th>Tipo</th><th>Motivazione</th></tr></thead>
+              <tbody>
+                <tr><td>iniziale</td><td><code>char</code></td><td>un singolo carattere</td></tr>
+                <tr><td>livello</td><td><code>byte</code></td><td>1–100 rientra nell'intervallo −128 … 127 (accettabili anche <code>short</code> o <code>int</code>)</td></tr>
+                <tr><td>puntiVita</td><td><code>short</code></td><td>5 000 rientra nel massimo di 32 767; un <code>byte</code> non basta (accettabile anche <code>int</code>)</td></tr>
+                <tr><td>esperienza</td><td><code>long</code></td><td>un <code>int</code> arriva a circa 2,1 miliardi</td></tr>
+                <tr><td>velocita</td><td><code>double</code></td><td>numero con parte decimale (accettabile anche <code>float</code>)</td></tr>
+                <tr><td>haScudo</td><td><code>boolean</code></td><td>due soli valori: vero o falso</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 2: la classe</summary>
+        <div class="inner">
+          <pre data-java>
+public class Personaggio {
+    private char iniziale;
+    private byte livello;
+    private short puntiVita;
+    private long esperienza;
+    private double velocita;
+    private boolean haScudo;
+
+    // a) costruttore senza parametri
+    public Personaggio() {
+        iniziale = '?';
+        livello = 1;
+        puntiVita = 100;
+        esperienza = 0;
+        velocita = 1.0;
+        haScudo = false;
+    }
+
+    // b) costruttore con l'iniziale
+    public Personaggio(char iniziale) {
+        this.iniziale = iniziale;
+        livello = 1;
+        puntiVita = 100;
+        esperienza = 0;
+        velocita = 1.0;
+        haScudo = false;
+    }
+
+    // c) costruttore completo
+    public Personaggio(char iniziale, int livello, boolean haScudo) {
+        if (livello &lt; 1) {
+            livello = 1;
+        }
+        if (livello &gt; 100) {
+            livello = 100;
+        }
+        this.iniziale = iniziale;
+        this.livello = (byte) livello;             // da int a byte: serve il cast
+        this.puntiVita = (short) (livello * 50);   // da int a short: serve il cast
+        this.esperienza = livello * 1000L;
+        this.velocita = 1.0 + livello / 10.0;      // 10.0: divisione con parte decimale
+        this.haScudo = haScudo;
+    }
+}</pre>
+          <p>Il costruttore b) può anche riutilizzare il costruttore a), evitando di ripetere le assegnazioni:</p>
+          <pre data-java>
+public Personaggio(char iniziale) {
+    this();                     // deve essere la prima istruzione
+    this.iniziale = iniziale;
+}</pre>
+        </div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 3: valori degli attributi</summary>
+        <div class="inner">
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>Attributo</th><th>p1</th><th>p2</th><th>p3</th></tr></thead>
+              <tbody>
+                <tr><td>iniziale</td><td><code>'?'</code></td><td><code>'Z'</code></td><td><code>'A'</code></td></tr>
+                <tr><td>livello</td><td>1</td><td>100</td><td>1</td></tr>
+                <tr><td>puntiVita</td><td>100</td><td>5000</td><td>50</td></tr>
+                <tr><td>esperienza</td><td>0</td><td>100000</td><td>1000</td></tr>
+                <tr><td>velocita</td><td>1.0</td><td>11.0</td><td>1.1</td></tr>
+                <tr><td>haScudo</td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:10px">In p2 il livello 150 viene ridotto a 100, in p3 il livello −5 viene portato a 1; i calcoli successivi usano il livello già corretto.</p>
+        </div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 4: divisione intera</summary>
+        <div class="inner">Si ottiene <b>2.0</b> invece di 2.5. <code>livello / 10</code> è una divisione tra due <code>int</code>: 15 / 10 vale 1 e la parte decimale viene scartata; poi 1.0 + 1 = 2.0. Per ottenere 2.5 bisogna dividere per <code>10.0</code>.</div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 5: overflow</summary>
+        <div class="inner">Si ottiene <b>−30536</b>. 70 × 500 = 35 000 supera il massimo di uno <code>short</code> (32 767): il cast fa ripartire il valore dal minimo, quindi 35 000 − 65 536 = −30 536. Il cast fa compilare il codice ma non controlla che il valore sia rappresentabile.</div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 6: istruzioni che compilano</summary>
+        <div class="inner">
+          <ul style="margin:0;padding-left:1.2em">
+            <li><code>new Personaggio('L', 5)</code>: non compila, non esiste un costruttore con parametri <code>(char, int)</code>.</li>
+            <li><code>new Personaggio('L', 5.5, true)</code>: non compila, la conversione da <code>double</code> a <code>int</code> richiede un cast.</li>
+            <li><code>new Personaggio('L', 'A', true)</code>: compila, la conversione da <code>char</code> a <code>int</code> è automatica; il livello vale 65.</li>
+            <li><code>new Personaggio(true)</code>: non compila, non esiste un costruttore con un solo parametro <code>boolean</code>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 7: tipo del parametro</summary>
+        <div class="inner">I numeri interi scritti nel codice sono di tipo <code>int</code>. Con un parametro <code>byte</code> l'istruzione <code>new Personaggio('L', 50, true)</code> non compilerebbe: servirebbe <code>(byte) 50</code> a ogni chiamata. Accettando un <code>int</code>, il valore viene controllato e convertito una sola volta, all'interno del costruttore.</div>
+      </details>
+
+      <details class="reveal-block">
+        <summary>Soluzione 8: attributo forza</summary>
+        <div class="inner">
+          <pre data-java>
+private float forza;
+
+public Personaggio(char iniziale, int livello, boolean haScudo, float forza) {
+    this(iniziale, livello, haScudo);   // riutilizza il costruttore c)
+    this.forza = forza;
+}
+
+// esempio: Personaggio p = new Personaggio('R', 30, true, 7.5f);</pre>
+          <p>Il suffisso <code>f</code> in <code>7.5f</code> è necessario: senza, il letterale sarebbe un <code>double</code>.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="js/core.js"></script>
+</body>
+</html>
